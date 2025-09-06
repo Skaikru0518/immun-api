@@ -2,97 +2,83 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 🧬 Immunology API Backend
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is a NestJS-based backend application modeling an immunology database.  
+It allows management of immune cells, receptors, and cytokines, as well as the biological relationships between them (e.g., which cell expresses which receptor, or which cytokine it produces).
 
-## Description
+## 🚀 Main Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Receptors:** CRUD operations for immune receptors (e.g., CD4, IL-2R).
+- **Immune Cells:** CRUD operations for immune cells (e.g., T helper cell, Macrophage).
+- **Cytokines:** CRUD operations for cytokines (e.g., IL-2, TNF-alpha).
+- **Relationships:**
+  - Cells can express multiple receptors, and receptors can exist on multiple cells (`ManyToMany`).
+  - Cells can produce multiple cytokines, and cytokines can be produced by multiple cells (`ManyToMany`).
+- **Database:** MySQL (Amazon RDS).
+- **API Documentation:** Swagger UI for easy testing and integration.
+- **Validation:** `class-validator` for input validation.
+- **Idempotent Seeding:** Load the database with predefined sample data, safe to run multiple times without duplicates.
 
-## Project setup
+## 🛠️ Tech Stack
 
-```bash
-$ pnpm install
-```
+- **Backend:** NestJS (Node.js framework)
+- **Database:** MySQL with TypeORM
+- **API Docs:** Swagger (OpenAPI)
+- **Validation:** `class-validator`, `class-transformer`
+- **Environment variables:** `@nestjs/config`
 
-## Compile and run the project
+## 📦 Installation & Local Run
 
-```bash
-# development
-$ pnpm run start
+1. **Clone the repo:**
 
-# watch mode
-$ pnpm run start:dev
+   ```bash
+   git clone <repo link>
+   cd immunology-api
+   ```
 
-# production mode
-$ pnpm run start:prod
-```
+2. **Install dependencies:**
 
-## Run tests
+   ```bash
+   npm install
+   ```
 
-```bash
-# unit tests
-$ pnpm run test
+3. **Set up environment variables:**
+   Create a `.env` file in the project root and add your MySQL RDS credentials:
 
-# e2e tests
-$ pnpm run test:e2e
+   ```env
+   DB_HOST=your-rds-endpoint.rds.amazonaws.com
+   DB_PORT=3306
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   DB_DATABASE=your_database_name
+   ```
 
-# test coverage
-$ pnpm run test:cov
-```
+4. **Seed sample data (immune cells, receptors, cytokines):**
 
-## Deployment
+   ```bash
+   npm run seed
+   ```
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+   The seeder is idempotent – you can run it multiple times without creating duplicates.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+5. **Start the application:**
+   - Development mode:
+     ```bash
+     npm run start:dev
+     ```
+   - Production mode:
+     ```bash
+     npm run build
+     npm run start:prod
+     ```
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
+The app will run on: `http://localhost:3000`
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 📄 API Documentation (Swagger)
 
-## Resources
+Once the application is running, you can view the API documentation:
 
-Check out a few resources that may come in handy when working with NestJS:
+- **Swagger UI:** `http://localhost:3000/api`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Here you can explore all available endpoints, request/response schemas, and directly test the API.
