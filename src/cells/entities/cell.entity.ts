@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { CellLineage } from '../enums/cell-lineage.enum';
 import { Receptor } from 'src/receptors/entities/receptor.entity';
+import { Cytokine } from 'src/cytokines/entities/cytokine.entity';
 
 @Entity('cells')
 export class Cell {
@@ -51,4 +52,13 @@ export class Cell {
   })
   @JoinTable()
   receptors: Receptor[];
+
+  @ApiProperty({
+    type: () => [Cytokine],
+    description: 'Cytokines produced by this cell',
+  })
+  @ManyToMany(() => Cytokine, (cytokine) => cytokine.producingCells, {
+    eager: true,
+  })
+  cytokines: Cytokine[];
 }

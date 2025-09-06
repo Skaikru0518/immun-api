@@ -4,4 +4,7 @@ export enum ReceptorType {
   TNF_RECEPTOR = 'TNF receptor family',
   CHEMOKINE_RECEPTOR = 'Chemokine receptor family',
   INTERLEUKIN_RECEPTOR = 'Interleukin receptor family',
+  COSTIMULATORY = 'Costimulatory receptor family',
+  ANTIGEN_RECEPTOR = 'Antigen receptor family',
+  Fc_RECEPTOR = 'Fc receptor family',
 }
